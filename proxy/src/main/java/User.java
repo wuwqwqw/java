@@ -1,2 +1,3 @@
-package PACKAGE_NAME;public interface User {
+public interface User {
+    void eat();
 }

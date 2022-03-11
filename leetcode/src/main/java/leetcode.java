@@ -1,5 +1,3 @@
-import sun.swing.SwingUtilities2;
-
 import java.util.*;
 
 public class leetcode {

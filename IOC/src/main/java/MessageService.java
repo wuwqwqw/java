@@ -1,2 +1,3 @@
-package PACKAGE_NAME;public interface MessageService {
+public interface MessageService {
+    String getMessage();
 }
