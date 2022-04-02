@@ -38,7 +38,6 @@ public class RestTemplateController {
     @PostMapping(value = "/get3")
     @ResponseBody
     public User getUserPost(@RequestBody User user){
-
         return user;
     }
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="FSM" />
+        <module name="Serializable" />
+        <module name="OrderDemo" />
+        <module name="aop" />
+        <module name="reflection" />
+        <module name="Builder" />
+        <module name="leetcode" />
+        <module name="Adapter" />
+        <module name="mockito" />
+        <module name="script" />
+        <module name="enumDemo" />
+        <module name="proxy" />
+        <module name="RestTemplateDemo" />
+        <module name="Regex" />
+        <module name="Utils" />
+        <module name="RestTemplate" />
+        <module name="InnerClass" />
+        <module name="IOC" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="Adapter" target="1.5" />
+      <module name="aop" target="1.5" />
+      <module name="Builder" target="1.5" />
+      <module name="enumDemo" target="1.5" />
+      <module name="FSM" target="6" />
+      <module name="InnerClass" target="8" />
+      <module name="IOC" target="1.5" />
+      <module name="leetcode" target="8" />
+      <module name="mockito" target="1.8" />
+      <module name="OrderDemo" target="1.8" />
+      <module name="proxy" target="1.5" />
+      <module name="reflection" target="1.5" />
+      <module name="Regex" target="8" />
+      <module name="RequestTemplate" target="1.8" />
+      <module name="restTemplate" target="1.8" />
+      <module name="RestTemplate" target="1.8" />
+      <module name="RestTemplateDemo" target="1.8" />
+      <module name="script" target="8" />
+      <module name="Serializable" target="1.5" />
+      <module name="Utils" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="OrderDemo" options="-parameters" />
+      <module name="RequestTemplate" options="-parameters" />
+      <module name="RestTemplate" options="-parameters" />
+      <module name="RestTemplateDemo" options="-parameters" />
+      <module name="mockito" options="-parameters" />
+      <module name="restTemplate" options="-parameters" />
+    </option>
+  </component>
+</project>
