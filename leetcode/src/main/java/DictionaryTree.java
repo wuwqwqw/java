@@ -1,8 +1,6 @@
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DictionaryTree {
@@ -25,7 +23,6 @@ public class DictionaryTree {
 
     public int respace(String[] dictionary, String sentence) {
         int n = sentence.length();
-
         Trie root = new Trie();
         for (String word : dictionary) {
             root.insert(word);
@@ -101,7 +98,7 @@ public class DictionaryTree {
         }
     }
 
-    static class Trie {
+    class Trie {
 
         public boolean isEnd;
         public Trie[] next;
@@ -201,4 +198,28 @@ public class DictionaryTree {
     public void testMultiSearch() {
         multiSearch("mississippi", new String[]{"is", "hi"});
     }
+
+//    给你一个字符串 s 和一个字符串列表 wordDict 作为字典。请你判断是否可以利用字典中出现的单词拼接出 s 。
+//    注意：不要求字典中出现的单词全部都使用，并且字典中的单词可以重复使用。
+//    示例 1：
+//    输入: s = "leetcode", wordDict = ["leet", "code"]
+//    输出: true
+//    解释: 返回 true 因为 "leetcode" 可以由 "leet" 和 "code" 拼接成。
+//    链接：https://leetcode-cn.com/problems/word-break
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> wordDictSet = new HashSet(wordDict);
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && wordDictSet.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+
 }

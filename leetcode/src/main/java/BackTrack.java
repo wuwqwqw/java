@@ -1,7 +1,6 @@
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BackTrack {
 
@@ -82,5 +81,58 @@ public class BackTrack {
                 combo.remove(combo.size() - 1);
             }
         }
+    }
+
+//    有重复字符串的排列组合。编写一种方法，计算某字符串的所有排列组合。
+//    示例1:
+//    输入：S = "qqe"
+//    输出：["eqq","qeq","qqe"]
+//    示例2:
+//    输入：S = "ab"
+//    输出：["ab", "ba"]
+//    链接：https://leetcode-cn.com/problems/permutation-ii-lcci
+
+    public String[] permutation(String S) {
+        char[] chars = new char[S.length()];
+        for (int i = 0; i < S.length(); ++i) {
+            chars[i] = S.charAt(i);
+        }
+        Arrays.sort(chars);
+        S = String.valueOf(chars);
+        List<String> strings = new ArrayList<>();
+        boolean vis[] = new boolean[S.length()];
+        StringBuilder builder = new StringBuilder("");
+        backTrack(builder, strings, S, vis);
+        String[] ans = new String[strings.size()];
+        int i = 0;
+        for (String s : strings) {
+            ans[i] = s;
+            ++i;
+        }
+        return ans;
+    }
+
+    public void backTrack(StringBuilder builder, List<String> strings, String S, boolean[] vis) {
+        if (builder.length() == S.length()) {
+            strings.add(String.valueOf(builder));
+        } else {
+            for (int i = 0; i < S.length(); ++i) {
+                if (!vis[i]) {
+                    vis[i] = true;
+                    builder.append(S.charAt(i));
+                    backTrack(builder, strings, S, vis);
+                    vis[i] = false;
+                    builder.deleteCharAt(builder.length() - 1);
+                    while (i + 1 < S.length() && S.charAt(i) == S.charAt(i + 1)) {
+                        ++i;
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testPermutation() {
+        permutation("qqe");
     }
 }

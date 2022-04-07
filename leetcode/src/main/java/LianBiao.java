@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.List;
+
 public class LianBiao {
 
     class ListNode {
@@ -92,4 +94,50 @@ public class LianBiao {
         small.next = largeHead.next;
         return smallHead.next;
     }
+
+//    编写代码，移除未排序链表中的重复节点。保留最开始出现的节点。
+//    示例1:
+//    输入：[1, 2, 3, 3, 2, 1]
+//    输出：[1, 2, 3]
+//    https://leetcode-cn.com/problems/remove-duplicate-node-lcci/
+
+    // 时间换空间
+    public ListNode removeDuplicateNodes(ListNode head) {
+        ListNode ob = head;
+        while (ob != null) {
+            ListNode oc = ob;
+            while (oc.next != null) {
+                if (oc.next.val == ob.val) {
+                    oc.next = oc.next.next;
+                } else {
+                    oc = oc.next;
+                }
+            }
+            ob = ob.next;
+        }
+        return head;
+    }
+
+//    实现一种算法，找出单向链表中倒数第 k 个节点。返回该节点的值。
+//    注意：本题相对原题稍作改动
+//    示例：
+//    输入： 1->2->3->4->5 和 k = 2
+//    输出： 4
+//    说明：
+//    给定的 k保证是有效的。
+//    链接：https://leetcode-cn.com/problems/kth-node-from-end-of-list-lcci
+
+    public int kthToLast(ListNode head, int k) {
+        ListNode right = head;
+        for (;k>0;--k){
+            right = right.next;
+        }
+        while (right!=null){
+            right = right.next;
+            head = head.next;
+        }
+        return head.val;
+    }
+
+
 }

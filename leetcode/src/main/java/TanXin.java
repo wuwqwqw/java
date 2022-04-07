@@ -52,7 +52,30 @@ public class TanXin {
 //    链接：https://leetcode-cn.com/problems/sub-sort-lcci
 
     public int[] subSort(int[] array) {
-
-        return null;
+        if(array == null || array.length == 0) return new int[]{-1, -1};
+        int last = -1, first = -1;
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        int len = array.length;
+        for(int i = 0; i < len; i++){
+            if(array[i] < max){
+                last = i;
+            }else{
+                max = Math.max(max, array[i]);
+            }
+            if(array[len - 1 - i] > min){
+                first = len - 1 - i;
+            }else{
+                min = Math.min(min, array[len - 1 - i]);
+            }
+        }
+        return new int[] {first, last};
     }
+
+    @Test
+    public void testSubSort(){
+        int[] ints = {1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19};
+        subSort(ints);
+    }
+
 }
