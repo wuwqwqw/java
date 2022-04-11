@@ -2,26 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Adapter/Adapter.iml" filepath="$PROJECT_DIR$/Adapter/Adapter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Builder/Builder.iml" filepath="$PROJECT_DIR$/Builder/Builder.iml" />
-      <module fileurl="file://$PROJECT_DIR$/FSM/FSM.iml" filepath="$PROJECT_DIR$/FSM/FSM.iml" />
-      <module fileurl="file://$PROJECT_DIR$/IOC/IOC.iml" filepath="$PROJECT_DIR$/IOC/IOC.iml" />
-      <module fileurl="file://$PROJECT_DIR$/InnerClass/InnerClass.iml" filepath="$PROJECT_DIR$/InnerClass/InnerClass.iml" />
-      <module fileurl="file://$PROJECT_DIR$/OrderDemo/OrderDemo.iml" filepath="$PROJECT_DIR$/OrderDemo/OrderDemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Regex/Regex.iml" filepath="$PROJECT_DIR$/Regex/Regex.iml" />
       <module fileurl="file://$PROJECT_DIR$/RequestTemplate/RestTemplate.iml" filepath="$PROJECT_DIR$/RequestTemplate/RestTemplate.iml" />
-      <module fileurl="file://$PROJECT_DIR$/RestTemplateDemo/RestTemplateDemo.iml" filepath="$PROJECT_DIR$/RestTemplateDemo/RestTemplateDemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Serializable/Serializable.iml" filepath="$PROJECT_DIR$/Serializable/Serializable.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Utils/Utils.iml" filepath="$PROJECT_DIR$/Utils/Utils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/aop/aop.iml" filepath="$PROJECT_DIR$/aop/aop.iml" />
-      <module fileurl="file://$PROJECT_DIR$/duotai/duotai.iml" filepath="$PROJECT_DIR$/duotai/duotai.iml" />
-      <module fileurl="file://$PROJECT_DIR$/enumDemo/enumDemo.iml" filepath="$PROJECT_DIR$/enumDemo/enumDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/java.iml" filepath="$PROJECT_DIR$/.idea/java.iml" />
       <module fileurl="file://$PROJECT_DIR$/leetcode/leetcode.iml" filepath="$PROJECT_DIR$/leetcode/leetcode.iml" />
       <module fileurl="file://$PROJECT_DIR$/mockito/mockito.iml" filepath="$PROJECT_DIR$/mockito/mockito.iml" />
-      <module fileurl="file://$PROJECT_DIR$/proxy/proxy.iml" filepath="$PROJECT_DIR$/proxy/proxy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/reflection/reflection.iml" filepath="$PROJECT_DIR$/reflection/reflection.iml" />
-      <module fileurl="file://$PROJECT_DIR$/script/script.iml" filepath="$PROJECT_DIR$/script/script.iml" />
     </modules>
   </component>
 </project>

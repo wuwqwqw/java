@@ -2,28 +2,14 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="FSM" />
-        <module name="Serializable" />
-        <module name="OrderDemo" />
-        <module name="aop" />
-        <module name="reflection" />
-        <module name="Builder" />
         <module name="leetcode" />
-        <module name="Adapter" />
         <module name="mockito" />
-        <module name="script" />
-        <module name="enumDemo" />
-        <module name="proxy" />
-        <module name="RestTemplateDemo" />
-        <module name="Regex" />
-        <module name="Utils" />
         <module name="RestTemplate" />
-        <module name="InnerClass" />
-        <module name="IOC" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">

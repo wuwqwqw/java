@@ -146,4 +146,59 @@ public class GraphAlgorithms {
     }
 
 
+//    现在你总共有 numCourses 门课需要选，记为0到numCourses - 1。给你一个数组prerequisites ，
+//    其中 prerequisites[i] = [ai, bi]，表示在选修课程ai前必须先选修bi 。
+//    例如，想要学习课程 0 ，你需要先完成课程1 ，我们用一个匹配来表示：[0,1] 。
+//    返回你为了学完所有课程所安排的学习顺序。可能会有多个正确的顺序，你只要返回 任意一种 就可以了。如果不可能完成所有课程，返回 一个空数组 。
+//    示例 1：
+//    输入：numCourses = 2, prerequisites = [[1,0]]
+//    输出：[0,1]
+//    解释：总共有 2 门课程。要学习课程 1，你需要先完成课程 0。因此，正确的课程顺序为 [0,1] 。
+//    链接：https://leetcode-cn.com/problems/course-schedule-ii
+
+    List<List<Integer>> edges;
+    int[] visited;
+    int[] result;
+    boolean valid = true;
+    int index;
+
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        edges = new ArrayList<List<Integer>>();
+        for (int i = 0; i < numCourses; ++i) {
+            edges.add(new ArrayList<Integer>());
+        }
+        visited = new int[numCourses];
+        result = new int[numCourses];
+        index = numCourses - 1;
+        for (int[] info : prerequisites) {
+            edges.get(info[1]).add(info[0]);
+        }
+        for (int i = 0; i < numCourses && valid; ++i) {
+            if (visited[i] == 0) {
+                dfs(i);
+            }
+        }
+        if (!valid) {
+            return new int[0];
+        }
+        return result;
+    }
+
+    public void dfs(int u) {
+        visited[u] = 1;
+        for (int v: edges.get(u)) {
+            if (visited[v] == 0) {
+                dfs(v);
+                if (!valid) {
+                    return;
+                }
+            }
+            else if (visited[v] == 1) {
+                valid = false;
+                return;
+            }
+        }
+        visited[u] = 2;
+        result[index--] = u;
+    }
 }

@@ -3,24 +3,9 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/proxy/pom.xml" />
-        <option value="$PROJECT_DIR$/IOC/pom.xml" />
         <option value="$PROJECT_DIR$/leetcode/pom.xml" />
-        <option value="$PROJECT_DIR$/script/pom.xml" />
-        <option value="$PROJECT_DIR$/aop/pom.xml" />
-        <option value="$PROJECT_DIR$/enumDemo/pom.xml" />
-        <option value="$PROJECT_DIR$/reflection/pom.xml" />
-        <option value="$PROJECT_DIR$/Adapter/pom.xml" />
-        <option value="$PROJECT_DIR$/FSM/pom.xml" />
-        <option value="$PROJECT_DIR$/Serializable/pom.xml" />
-        <option value="$PROJECT_DIR$/OrderDemo/pom.xml" />
-        <option value="$PROJECT_DIR$/Builder/pom.xml" />
         <option value="$PROJECT_DIR$/RequestTemplate/pom.xml" />
-        <option value="$PROJECT_DIR$/RestTemplateDemo/pom.xml" />
         <option value="$PROJECT_DIR$/mockito/pom.xml" />
-        <option value="$PROJECT_DIR$/Utils/pom.xml" />
-        <option value="$PROJECT_DIR$/Regex/pom.xml" />
-        <option value="$PROJECT_DIR$/InnerClass/pom.xml" />
       </list>
     </option>
   </component>
