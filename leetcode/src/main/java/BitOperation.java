@@ -58,5 +58,24 @@ public class BitOperation {
         return numbers;
     }
 
+//    给你一个整数 n ，对于0 <= i <= n 中的每个 i ，计算其二进制表示中 1 的个数 ，返回一个长度为 n + 1 的数组 ans 作为答案。
+//    示例 1：
+//    输入：n = 2
+//    输出：[0,1,1]
+//    解释：
+//            0 --> 0
+//            1 --> 1
+//            2 --> 10
+//    链接：https://leetcode-cn.com/problems/counting-bits
 
+    public int[] countBits(int n) {
+        int[]bits=new int[n+1];
+        bits[0]=0;
+        int highBit=1;
+        for(int i=1;i<=n;i++){
+            if((i&(i-1))==0)highBit=i;
+            bits[i]=bits[i-highBit]+1;
+        }
+        return bits;
+    }
 }

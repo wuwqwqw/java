@@ -1,6 +1,4 @@
-package com.example.mockito.innerClass;
-
-import com.example.mockito.designPatterns.fsm.*;
+package com.example.mockito.designPatterns.fsm;
 
 public class SuperMario implements IMario {
     private static final SuperMario instance = new SuperMario();

@@ -1,25 +1,24 @@
-package com.example.mockito.innerClass;
+package com.example.mockito.designPatterns.fsm;
 
-import com.example.mockito.designPatterns.fsm.*;
+public class SmallMario implements IMario{
+    private static final SmallMario instance = new SmallMario();
 
-public class SuperMario implements IMario {
-    private static final SuperMario instance = new SuperMario();
-
-    private SuperMario() {
+    private SmallMario() {
     }
 
-    public static SuperMario getInstance() {
+    public static SmallMario getInstance() {
         return instance;
     }
 
     @Override
     public State getName() {
-        return State.SUPER;
+        return State.SMALL;
     }
 
     @Override
     public void obtainMushRoom(MarioStateMachine stateMachine) {
-
+        stateMachine.setCurrentState(SuperMario.getInstance());
+        stateMachine.setScore(stateMachine.getScore() + 100);
     }
 
     @Override
@@ -36,7 +35,7 @@ public class SuperMario implements IMario {
 
     @Override
     public void meetMonster(MarioStateMachine stateMachine) {
-        stateMachine.setCurrentState(SmallMario.getInstance());
-        stateMachine.setScore(stateMachine.getScore()-100);
+        // do nothing...
     }
+
 }

@@ -1,2 +1,11 @@
 server:
   port: 8082
+threadpool:
+  # 核心线程池数
+  corePoolSize: 8
+  #最大线程
+  maxPoolSize: 16
+  #队列容量
+  queueCapacity: 5
+  #空闲线程存活时间
+  keepAliveSeconds: 300

@@ -128,7 +128,7 @@ public class Tree {
             next = null;
         }
     }
-    
+
     public ListNode[] listOfDepth(TreeNode tree) {
         ListNode[] nodes = new ListNode[depth(tree)];
         Queue<TreeNode> queue = new LinkedList<>();
@@ -369,6 +369,34 @@ public class Tree {
         midCheckSubTree(root.right);
     }
 
+//    给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
+//    叶子节点 是指没有子节点的节点。
+//    示例 1：
+//    输入：root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22
+//    输出：[[5,4,11,2],[5,8,4,5]]
+//    链接：https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof
+
+    List<List<Integer>> lists = new ArrayList<>();
+
+    public List<List<Integer>> pathSum(TreeNode root, int target) {
+        backTrack(root, 0, target, new ArrayList<>());
+        return lists;
+    }
+
+    public void backTrack(TreeNode root, int sum, int target, List<Integer> list) {
+        if (root != null) {
+            sum += root.val;
+            list.add(root.val);
+            backTrack(root.left, sum, target, list);
+            backTrack(root.right, sum, target, list);
+            if (sum == target && root.left == null && root.right == null) {
+                lists.add(new ArrayList<Integer>(list));
+            }
+            list.remove(list.size()-1);
+            sum -= root.val;
+        }
+    }
+
 //    给定一棵二叉树，其中每个节点都含有一个整数数值(该值或正或负)。
 //    设计一个算法，打印节点数值总和等于某个给定值的所有路径的数量。
 //    注意，路径不一定非得从二叉树的根节点或叶节点开始或结束，但是其方向必须向下(只能从父节点指向子节点方向)。
@@ -385,7 +413,7 @@ public class Tree {
 //    解释：和为 22的路径有：[5,4,11,2], [5,8,4,5], [4,11,7]
 //    链接：https://leetcode-cn.com/problems/paths-with-sum-lcci
 
-    public int pathSum(TreeNode root, int sum) {
+    public int pathSum2(TreeNode root, int sum) {
         dfsPathSum(root, sum);
         return answer;
     }
@@ -410,4 +438,74 @@ public class Tree {
         dfsPathSum(root.right, target);
         temList.remove(temList.size() - 1);
     }
+
+//    给你二叉树的根结点 root ，请你将它展开为一个单链表：
+//    展开后的单链表应该同样使用 TreeNode ，其中 right 子指针指向链表中下一个结点，而左子指针始终为 null 。
+//    展开后的单链表应该与二叉树 先序遍历 顺序相同。
+//    示例 1：
+//    输入：root = [1,2,5,3,4,null,6]
+//    输出：[1,null,2,null,3,null,4,null,5,null,6]
+//    链接：https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list
+
+//    具体做法是，对于当前节点，如果其左子节点不为空，则在其左子树中找到最右边的节点，
+//    作为前驱节点，将当前节点的右子节点赋给前驱节点的右子节点，然后将当前节点的左子节点赋给当前节点的右子节点，
+//    并将当前节点的左子节点设为空。对当前节点处理结束后，继续处理链表中的下一个节点，直到所有节点都处理结束。
+
+    public void flatten(TreeNode root) {
+        List<TreeNode> list = new ArrayList<TreeNode>();
+        preorderTraversal(root, list);
+        int size = list.size();
+        for (int i = 1; i < size; i++) {
+            TreeNode prev = list.get(i - 1), curr = list.get(i);
+            prev.left = null;
+            prev.right = curr;
+        }
+    }
+
+    public void preorderTraversal(TreeNode root, List<TreeNode> list) {
+        if (root != null) {
+            list.add(root);
+            preorderTraversal(root.left, list);
+            preorderTraversal(root.right, list);
+        }
+    }
+
+//    输入某二叉树的前序遍历和中序遍历的结果，请构建该二叉树并返回其根节点。
+//    假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+//    示例 1:
+//    Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+//    Output: [3,9,20,null,null,15,7]
+//    示例 2:
+//    Input: preorder = [-1], inorder = [-1]
+//    Output: [-1]
+//    链接：https://leetcode-cn.com/problems/zhong-jian-er-cha-shu-lcof
+
+    public TreeNode build(int[] preorder, int[] inorder, int pre_left, int pre_right, int in_left, int in_right) {
+
+        TreeNode root = new TreeNode(preorder[pre_left]);
+        if (pre_left >= pre_right) return root;
+        for (int i = in_left; i <= in_right; i++) {
+            if (inorder[i] == root.val) {
+                if (i == in_left) {
+                    root.right = build(preorder, inorder, pre_left + 1, pre_right, i + 1, in_right);
+                } else if (i == in_right) {
+                    root.left = build(preorder, inorder, pre_left + 1, pre_right, in_left, i - 1);
+                } else {
+                    root.left = build(preorder, inorder, pre_left + 1, i - in_left + pre_left, in_left, i - 1);
+                    root.right = build(preorder, inorder, i - in_left + pre_left + 1, pre_right, i + 1, in_right);
+                }
+
+            }
+        }
+        return root;
+
+    }
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder.length == 0) return null;
+        return build(preorder, inorder, 0, preorder.length - 1, 0, inorder.length - 1);
+
+    }
+
+
 }

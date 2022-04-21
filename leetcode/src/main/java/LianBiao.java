@@ -69,7 +69,7 @@ public class LianBiao {
     }
 
 //    给你一个链表的头节点 head 和一个特定值 x ，请你对链表进行分隔，使得所有 小于 x 的节点都出现在 大于或等于 x 的节点之前。
-//    你不需要 保留 每个分区中各节点的初始相对位置。
+//    你不需要保留每个分区中各节点的初始相对位置。
 //    示例 1：
 //    输入：head = [1,4,3,2,5,2], x = 3
 //    输出：[1,2,2,4,3,5]
@@ -137,6 +137,29 @@ public class LianBiao {
             head = head.next;
         }
         return head.val;
+    }
+
+//    给你一个链表，删除链表的倒数第n个结点，并且返回链表的头结点。
+//    示例 1：
+//    输入：head = [1,2,3,4,5], n = 2
+//    输出：[1,2,3,5]
+//    链接：https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode left = head;
+        ListNode right = head;
+        for (;n>0;--n){
+            right = right.next;
+        }
+        if (right == null){
+            return head.next;
+        }
+        while (right.next!=null){
+            left = left.next;
+            right = right.next;
+        }
+        left.next = left.next.next;
+        return head;
     }
 
 

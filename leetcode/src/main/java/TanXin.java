@@ -44,38 +44,60 @@ public class TanXin {
         nums[i +1] = tem;
     }
 
-//    给定一个整数数组，编写一个函数，找出索引m和n，只要将索引区间[m,n]的元素排好序，整个数组就是有序的。
-//    注意：n-m尽量最小，也就是说，找出符合条件的最短序列。
-//    函数返回值为[m,n]，若不存在这样的m和n（例如整个数组是有序的），请返回[-1,-1]。
-//    输入： [1,2,4,7,10,11,7,12,6,7,16,18,19]
-//    输出： [3,9]
-//    链接：https://leetcode-cn.com/problems/sub-sort-lcci
+//    给定一个长度为 n 的整数数组height。有n条垂线，第 i 条线的两个端点是(i, 0)和(i, height[i])。
+//    找出其中的两条线，使得它们与x轴共同构成的容器可以容纳最多的水。
+//    返回容器可以储存的最大水量。
+//    说明：你不能倾斜容器。
+//    示例 1：
+//    输入：[1,8,6,2,5,4,8,3,7]
+//    输出：49
+//    解释：图中垂直线代表输入数组 [1,8,6,2,5,4,8,3,7]。在此情况下，容器能够容纳水（表示为蓝色部分）的最大值为49。
+//    链接：https://leetcode-cn.com/problems/container-with-most-water
 
-    public int[] subSort(int[] array) {
-        if(array == null || array.length == 0) return new int[]{-1, -1};
-        int last = -1, first = -1;
-        int max = Integer.MIN_VALUE;
-        int min = Integer.MAX_VALUE;
-        int len = array.length;
-        for(int i = 0; i < len; i++){
-            if(array[i] < max){
-                last = i;
-            }else{
-                max = Math.max(max, array[i]);
+    public int maxArea(int[] height) {
+        int l = 0, r = height.length - 1;
+        int ans = 0;
+        while (l < r) {
+            int area = Math.min(height[l], height[r]) * (r - l);
+            ans = Math.max(ans, area);
+            if (height[l] <= height[r]) {
+                ++l;
             }
-            if(array[len - 1 - i] > min){
-                first = len - 1 - i;
-            }else{
-                min = Math.min(min, array[len - 1 - i]);
+            else {
+                --r;
             }
         }
-        return new int[] {first, last};
+        return ans;
     }
 
     @Test
-    public void testSubSort(){
-        int[] ints = {1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19};
-        subSort(ints);
+    public void testMaxArea(){
+        maxArea(new int[]{1,3,2,5,25,24,5});
     }
 
+//    给定一个非负整数数组nums ，你最初位于数组的 第一个下标 。
+//    数组中的每个元素代表你在该位置可以跳跃的最大长度。
+//    判断你是否能够到达最后一个下标。
+//    示例1：
+//    输入：nums = [2,3,1,1,4]
+//    输出：true
+//    解释：可以先跳 1 步，从下标 0 到达下标 1, 然后再从下标 1 跳 3 步到达最后一个下标。
+//    链接：https://leetcode-cn.com/problems/jump-game
+
+    public boolean canJump(int[] nums) {
+        for(int i=0;i<nums.length;){
+            int max=0;
+            int max_pos=0;
+            if(nums[i]+i>=nums.length-1)return true;
+            for(int j=1;j<=nums[i];j++){
+                if(j+i+nums[j+i]>=max+max_pos){
+                    max=nums[j+i];
+                    max_pos=j+i;
+                }
+            }
+            if(max==0)return false;
+            i=max_pos;
+        }
+        return false;
+    }
 }

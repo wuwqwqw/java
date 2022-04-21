@@ -111,18 +111,18 @@ public class GraphAlgorithms {
 
     public int[] pondSizes(int[][] land) {
         vis = new boolean[land.length][land[0].length];
-        for (int i = 0;i<land.length;++i){
-            for (int j = 0;j<land[0].length;++j){
-                if (!vis[i][j]){
+        for (int i = 0; i < land.length; ++i) {
+            for (int j = 0; j < land[0].length; ++j) {
+                if (!vis[i][j]) {
                     count = 0;
-                    dfs(land,i,j);
-                    if (count!=0)
-                    list.add(count);
+                    dfs(land, i, j);
+                    if (count != 0)
+                        list.add(count);
                 }
             }
         }
         int[] ints = new int[list.size()];
-        for (int i = 0;i<list.size();++i){
+        for (int i = 0; i < list.size(); ++i) {
             ints[i] = list.get(i);
         }
         Arrays.sort(ints);
@@ -130,19 +130,19 @@ public class GraphAlgorithms {
     }
 
     private void dfs(int[][] land, int i, int j) {
-        if (i<0||j<0||i>= land.length||j>= land[0].length||land[i][j]!=0||vis[i][j]){
+        if (i < 0 || j < 0 || i >= land.length || j >= land[0].length || land[i][j] != 0 || vis[i][j]) {
             return;
         }
         vis[i][j] = true;
         count++;
-        dfs(land,i+1,j+1);
-        dfs(land,i+1,j-1);
-        dfs(land,i+1,j);
-        dfs(land,i,j-1);
-        dfs(land,i,j+1);
-        dfs(land,i-1,j);
-        dfs(land,i-1,j-1);
-        dfs(land,i-1,j+1);
+        dfs(land, i + 1, j + 1);
+        dfs(land, i + 1, j - 1);
+        dfs(land, i + 1, j);
+        dfs(land, i, j - 1);
+        dfs(land, i, j + 1);
+        dfs(land, i - 1, j);
+        dfs(land, i - 1, j - 1);
+        dfs(land, i - 1, j + 1);
     }
 
 
@@ -186,14 +186,13 @@ public class GraphAlgorithms {
 
     public void dfs(int u) {
         visited[u] = 1;
-        for (int v: edges.get(u)) {
+        for (int v : edges.get(u)) {
             if (visited[v] == 0) {
                 dfs(v);
                 if (!valid) {
                     return;
                 }
-            }
-            else if (visited[v] == 1) {
+            } else if (visited[v] == 1) {
                 valid = false;
                 return;
             }
@@ -201,4 +200,92 @@ public class GraphAlgorithms {
         visited[u] = 2;
         result[index--] = u;
     }
+
+//    给定一个m x n 二维字符网格board 和一个字符串单词word 。如果word 存在于网格中，返回 true ；否则，返回 false 。
+//    单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
+//    例如，在下面的 3×4 的矩阵中包含单词 "ABCCED"（单词中的字母已标出）。
+//    示例 1：
+//    输入：board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
+//    输出：true
+//    链接：https://leetcode-cn.com/problems/ju-zhen-zhong-de-lu-jing-lcof
+
+    public boolean exist(char[][] board, String word) {
+        visit = new boolean[board.length][board[0].length];
+        for (int i = 0; i < board.length; ++i) {
+            for (int j = 0; j < board[0].length; ++j) {
+                bfs(board, word, 0, i, j);
+            }
+        }
+        return flag;
+    }
+
+    boolean visit[][];
+    boolean flag = false;
+
+    public void bfs(char[][] board, String word, int index, int i, int j) {
+        if (index >= word.length()) {
+            flag = true;
+        }
+        if (i < 0 || j < 0 || i >= board.length || j >= board[0].length || flag || visit[i][j] || board[i][j] != word.charAt(index)) {
+            return;
+        } else {
+            visit[i][j] = true;
+            bfs(board, word, index + 1, i - 1, j);
+            bfs(board, word, index + 1, i + 1, j);
+            bfs(board, word, index + 1, i, j - 1);
+            bfs(board, word, index + 1, i, j + 1);
+            visit[i][j] = false;
+        }
+    }
+
+    @Test
+    public void testExist() {
+//        char[][] chars = {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}};
+//        String word = "ABCCED";
+        char[][] chars = {{'a'}, {'b'}};
+        String word = "ba";
+        boolean exist = exist(chars, word);
+        System.out.println(exist);
+    }
+
+//    地上有一个m行n列的方格，从坐标 [0,0] 到坐标 [m-1,n-1] 。一个机器人从坐标 [0, 0] 的格子开始移动，
+//    它每次可以向左、右、上、下移动一格（不能移动到方格外），也不能进入行坐标和列坐标的数位之和大于k的格子。
+//    例如，当k为18时，机器人能够进入方格 [35, 37] ，因为3+5+3+7=18。但它不能进入方格 [35, 38]，
+//    因为3+5+3+8=19。请问该机器人能够到达多少个格子？
+//    示例 1：
+//    输入：m = 2, n = 3, k = 1
+//    输出：3
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/ji-qi-ren-de-yun-dong-fan-wei-lcof
+
+    public int movingCount(int m, int n, int k) {
+        v = new boolean[m][n];
+        dfs(m, n, k, 0, 0);
+        return ans;
+    }
+
+    public void dfs(int m, int n, int k, int i, int j) {
+        if (i < 0 || j < 0 || i >= m || j >= n || v[i][j] || (getStep(i) + getStep(j) > k)) {
+            return;
+        } else {
+            ans++;
+            v[i][j] = true;
+            dfs(m, n, k, i + 1, j);
+            dfs(m, n, k, i, j + 1);
+        }
+    }
+
+    boolean v[][];
+    int ans = 0;
+
+    public int getStep(int a) {
+        int res = 0;
+        while (a > 0) {
+            res += a % 10;
+            a /= 10;
+        }
+        return res;
+    }
+
+
 }

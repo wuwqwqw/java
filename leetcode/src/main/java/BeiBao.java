@@ -1,6 +1,38 @@
+import org.junit.Test;
+
 import java.util.Arrays;
 
 public class BeiBao {
+
+//    给你一个整数 n ，返回 和为 n 的完全平方数的最少数量 。
+//    完全平方数 是一个整数，其值等于另一个整数的平方；换句话说，其值等于一个整数自乘的积。例如，1、4、9 和 16 都是完全平方数，而 3 和 11 不是。
+//    示例1：
+//    输入：n = 12
+//    输出：3
+//    解释：12 = 4 + 4 + 4
+//    链接：https://leetcode-cn.com/problems/perfect-squares
+
+    public int numSquares(int n) {
+        int[] coins = new int[(int) Math.sqrt(n)];
+        for (int i =0 ;i<(int) Math.sqrt(n);i++){
+            coins[i] = (i+1)*(i+1);
+        }
+        int[] dp = new int[n + 1];
+        for (int i = 0;i<=n;++i){
+            dp[i] = i;
+        }
+        for (int coin : coins){
+            for (int i = coin;i<=n;++i){
+                dp[i] = Math.min(dp[i],dp[i-coin]+1);
+            }
+        }
+        return dp[n];
+    }
+
+    @Test
+    public void testNumSquares(){
+        numSquares(12);
+    }
 
 //    硬币。给定数量不限的硬币，币值为25分、10分、5分和1分，编写代码计算n分有几种表示法。(结果可能会很大，你需要将结果模上1000000007)
 //    示例1:
@@ -12,7 +44,7 @@ public class BeiBao {
 //    链接：https://leetcode-cn.com/problems/coin-lcci
 
     static final int MOD = 1000000007;
-    int[] coins = {25, 10, 5, 1};
+    int[] coins = {1, 5, 10, 25};
 
     public int waysToChange(int n) {
         int[] f = new int[n + 1];
@@ -25,6 +57,11 @@ public class BeiBao {
             }
         }
         return f[n];
+    }
+
+    @Test
+    public void testWaysToChange(){
+        waysToChange(30);
     }
 
 //    给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
@@ -117,4 +154,6 @@ public class BeiBao {
         }
         return dp[neg];
     }
+
+
 }
