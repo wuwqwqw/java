@@ -75,6 +75,32 @@ public class DynamicProgramming {
         return Math.max(max, 0);
     }
 
+//    给你一个整数数组 prices ，其中prices[i] 表示某支股票第 i 天的价格。
+//    在每一天，你可以决定是否购买和/或出售股票。你在任何时候最多只能持有 一股 股票。你也可以先购买，然后在 同一天 出售。
+//    返回 你能获得的 最大 利润。
+//    示例 1：
+//    输入：prices = [7,1,5,3,6,4]
+//    输出：7
+//    解释：在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5 - 1 = 4 。
+//    随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6 - 3 = 3 。
+//    总利润为 4 + 3 = 7 。
+//    链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii
+
+    public int maxProfit2(int[] prices) {
+        int[] dp = new int[prices.length];
+        dp[0] = 0;
+        int max = 0;
+        int maxBeforeTwoDays = 0;
+        for (int i = 1;i<prices.length;++i){
+            dp[i] = Math.max(Math.max(dp[i-1]+prices[i]-prices[i-1],prices[i]-prices[i-1]+maxBeforeTwoDays),0);
+            max = Math.max(max,dp[i]);
+            if (i>=1){
+                maxBeforeTwoDays = Math.max(maxBeforeTwoDays,dp[i-1]);
+            }
+        }
+        return max;
+    }
+
 //    给定一个整数数组prices，其中第prices[i]表示第i天的股票价格。
 //    设计一个算法计算出最大利润。在满足以下约束条件下，你可以尽可能地完成更多的交易（多次买卖一支股票）:
 //    卖出股票后，你无法在第二天买入股票 (即冷冻期为 1 天)。
@@ -85,7 +111,7 @@ public class DynamicProgramming {
 //    解释: 对应的交易状态为: [买入, 卖出, 冷冻期, 买入, 卖出]
 //    链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown
 
-    public int maxProfit2(int[] prices) {
+    public int maxProfit3(int[] prices) {
         int[] dp = new int[prices.length];
         dp[0] = 0;
         int max = 0;
@@ -104,6 +130,44 @@ public class DynamicProgramming {
     public void testMaxProfit(){
         maxProfit2(new int[]{6,1,6,4,3,0,2});
     }
+
+//    给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。
+//    设计一个算法来计算你所能获取的最大利润。你最多可以完成两笔交易。
+//    注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+//    示例1:
+//    输入：prices = [3,3,5,0,0,3,1,4]
+//    输出：6
+//    解释：在第 4 天（股票价格 = 0）的时候买入，在第 6 天（股票价格 = 3）的时候卖出，这笔交易所能获得利润 = 3-0 = 3 。
+//    随后，在第 7 天（股票价格 = 1）的时候买入，在第 8 天 （股票价格 = 4）的时候卖出，这笔交易所能获得利润 = 4-1 = 3 。
+//    链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii
+
+    public int maxProfit4(int[] prices) {
+        int[] dp = new int[prices.length];
+        dp[0] = 0;
+        int max = 0;
+        int maxBeforeTwoDays = 0;
+        for (int i = 1;i<prices.length;++i){
+            dp[i] = Math.max(Math.max(dp[i-1]+prices[i]-prices[i-1],prices[i]-prices[i-1]+maxBeforeTwoDays),0);
+            max = Math.max(max,dp[i]);
+            if (i>=1){
+                maxBeforeTwoDays = Math.max(maxBeforeTwoDays,dp[i-1]);
+            }
+        }
+        return max;
+    }
+
+//    给定一个整数数组prices ，它的第 i 个元素prices[i] 是一支给定的股票在第 i 天的价格。
+//    设计一个算法来计算你所能获取的最大利润。你最多可以完成 k 笔交易。
+//    注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+//    示例 1：
+//    输入：k = 2, prices = [2,4,1]
+//    输出：2
+//    解释：在第 1 天 (股票价格 = 2) 的时候买入，在第 2 天 (股票价格 = 4) 的时候卖出，这笔交易所能获得利润 = 4-2 = 2 。
+//    链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv
+
+//    public int maxProfit5(int k, int[] prices) {
+//
+//    }
 
 //    给你一个整数 n ，对于0 <= i <= n 中的每个 i ，计算其二进制表示中 1 的个数 ，返回一个长度为 n + 1 的数组 ans 作为答案。
 //    示例 1：
