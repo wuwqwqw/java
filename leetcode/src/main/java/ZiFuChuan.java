@@ -37,7 +37,7 @@ public class ZiFuChuan {
         return true;
     }
 
-    //    URL化。编写一种方法，将字符串中的空格全部替换为%20。
+//    URL化。编写一种方法，将字符串中的空格全部替换为%20。
 //    假定该字符串尾部有足够的空间存放新增字符，并且知道字符串的“真实”长度。
 //    （注：用Java实现的话，请使用字符数组实现，以便直接在数组上操作。）
 //    输入："Mr John Smith    ", 13
@@ -68,7 +68,6 @@ public class ZiFuChuan {
 //    输出：true（排列有"tacocat"、"atcocta"，等等）
 //    链接：https://leetcode-cn.com/problems/palindrome-permutation-lcci
 
-
     public boolean canPermutePalindrome(String s) {
         Set<Character> set = new HashSet<>();
         for (int i = 0; i < s.length(); ++i) {
@@ -89,6 +88,7 @@ public class ZiFuChuan {
 //    输入: s = "abc"
 //    输出: true
 //    链接：https://leetcode-cn.com/problems/is-unique-lcci
+
     public boolean isUnique(String astr) {
         HashSet<Character> characters = new HashSet<>();
         for (int i = 0; i < astr.length(); ++i) {
@@ -109,6 +109,7 @@ public class ZiFuChuan {
 //    输入: s1 = "abc", s2 = "bad"
 //    输出: false
 //    链接：https://leetcode-cn.com/problems/check-permutation-lcci
+
     public boolean CheckPermutation(String s1, String s2) {
         HashMap<Character, Integer> map1 = new HashMap<>();
         HashMap<Character, Integer> map2 = new HashMap<>();

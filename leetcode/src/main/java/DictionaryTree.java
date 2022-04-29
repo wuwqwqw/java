@@ -24,10 +24,9 @@ public class DictionaryTree {
     public int respace(String[] dictionary, String sentence) {
         int n = sentence.length();
         Trie root = new Trie();
-        for (String word : dictionary) {
+        for (String word: dictionary) {
             root.insert(word);
         }
-
         int[] dp = new int[n + 1];
         Arrays.fill(dp, Integer.MAX_VALUE);
         dp[0] = 0;
@@ -51,6 +50,10 @@ public class DictionaryTree {
         return dp[n];
     }
 
+    @Test
+    public void testRespace(){
+        respace(new String[]{"looked","just","like","her","brother"},"jesslookedjustliketimherbrother");
+    }
 
 //    给定一组单词words，编写一个程序，找出其中的最长单词，
 //    且该单词由这组单词中的其他单词组合而成。若有多个长度相同的结果，
