@@ -1,6 +1,10 @@
 import org.junit.Test;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class LianBiao {
 
@@ -162,5 +166,63 @@ public class LianBiao {
         return head;
     }
 
+//    链表中的节点每k个一组翻转
+//    https://www.nowcoder.com/practice/b49c3dc907814e9bbfa8437c251b028e?tpId=196&tqId=37080&rp=1&ru=/exam/oj&qru=/exam/oj&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26pageSize%3D50%26search%3D%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D196&difficulty=undefined&judgeStatus=undefined&tags=&title=
+
+    public ListNode reverseKGroup (ListNode head, int k) {
+        if(head==null||head.next==null||k==1||k==0){
+            return head;
+        }
+        ListNode temHead = head;
+        for(int i =0;i<k;++i){
+            if(temHead==null){
+                return head;
+            }else{
+                temHead = temHead.next;
+            }
+        }
+        ListNode oldIndex= head;
+        ListNode newHead = null;
+        for (int i = 0;i<k;++i){
+            ListNode tem = oldIndex;
+            oldIndex = oldIndex.next;
+            tem.next = newHead;
+            newHead = tem;
+            if (oldIndex==null){
+                head.next = null;
+                return newHead;
+            }
+        }
+        head.next = reverseKGroup(oldIndex,k);
+        return newHead;
+    }
+
+//    合并k个已排序的链表
+//    https://www.nowcoder.com/practice/65cfde9e5b9b4cf2b6bafa5f3ef33fa6?tpId=196&tqId=37081&rp=1&ru=/exam/oj&qru=/exam/oj&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26pageSize%3D50%26search%3D%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D196&difficulty=undefined&judgeStatus=undefined&tags=&title=
+
+    public ListNode mergeKLists(ArrayList<ListNode> lists) {
+        if (CollectionUtils.isEmpty(lists)){
+            return null;
+        }
+        PriorityQueue<ListNode> queue = new PriorityQueue<>((a,b)->a.val-b.val);
+        for (ListNode node : lists){
+            if(node!=null){
+                queue.offer(node);
+            }
+        }
+        ListNode ans = queue.poll();
+        ListNode left = ans;
+        if (left.next!=null){
+            queue.offer(left.next);
+        }
+        while (!queue.isEmpty()){
+            left.next = queue.poll();
+            left = left.next;
+            if (left.next!=null){
+                queue.offer(left.next);
+            }
+        }
+        return ans;
+    }
 
 }

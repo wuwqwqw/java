@@ -346,4 +346,35 @@ public class ShuZu {
         return min;
     }
 
+    public long maxWater (int[] arr) {
+        long ans = 0;
+        int left = 0;
+        for (int i = 1;i<arr.length;i++){
+            if (arr[i]>=arr[left]){
+                if(left+1 == i){
+                    left ++;
+                    continue;
+                }
+                for (int j = left+1;j<i;++j){
+                    ans+=arr[left]-arr[j];
+                }
+                left = i;
+            }
+        }
+        if (left!=arr.length-1){
+            int[] ints = new int[arr.length - left];
+            for (int i = arr.length-1;i>=left;i--){
+                ints[arr.length-1-i] = arr[i];
+            }
+            return ans+maxWater(ints);
+        }else {
+            return ans;
+        }
+    }
+
+    @Test
+    public void testMaxWater(){
+        long l = maxWater(new int[]{5,5,1,7,1,1,5,2,7,6});
+        System.out.printf(String.valueOf(l));
+    }
 }

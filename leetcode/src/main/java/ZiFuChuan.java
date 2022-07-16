@@ -245,4 +245,82 @@ public class ZiFuChuan {
         }
         return false;
     }
+
+//    给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。
+//    如果反转后整数超过 32 位的有符号整数的范围[−231, 231− 1] ，就返回 0。
+//    假设环境不允许存储 64 位整数（有符号或无符号）。
+//    示例 1：
+//    输入：x = 123
+//    输出：321
+//    链接：https://leetcode.cn/problems/reverse-integer
+    public int reverse(int x) {
+        String s = String.valueOf(x);
+        if (s.charAt(0)=='-'){
+            s = s.substring(1);
+        }
+        s = new StringBuilder(s).reverse().toString();
+        if (Long.parseLong(s)>Integer.MAX_VALUE){
+            return 0;
+        }else {
+            return x>0?Integer.parseInt(s):-Integer.parseInt(s);
+        }
+    }
+
+//    给你一个字符串 s，找到 s 中最长的回文子串。
+//    示例 1：
+//    输入：s = "babad"
+//    输出："bab"
+//    解释："aba" 同样是符合题意的答案。
+//    链接：https://leetcode.cn/problems/longest-palindromic-substring
+
+    // 本题有时间空间双O(n)的manacher算法，比较复杂，这里是中心扩展法，空间O(1)，时间O(N2)
+    public String longestPalindrome(String s) {
+        int len = s.length();
+        if (len < 2) {
+            return s;
+        }
+        int maxLen = 1;
+        int tem=1;
+        int mid=0;
+
+        for(int i=1;i<len-1;i++){
+            tem=1;
+            for(int j=1;j+i<len&&i-j>=0;j++){
+                if(s.charAt(i-j)!=s.charAt(i+j)){
+                    break;
+                }
+                tem+=2;
+                if(maxLen<tem){
+                    maxLen=tem;
+                    mid=i;
+                }
+            }
+        }
+        for(int i=0;i<len-1;i++){
+            if(s.charAt(i)==s.charAt(i+1)){
+                tem=2;
+                if(maxLen<tem){
+                    maxLen=tem;
+                    mid=i;
+                }
+                for(int j=1;j+i+1<len&&i-j>=0;j++){
+                    if(s.charAt(i-j)!=s.charAt(i+j+1)){
+                        break;
+                    }
+                    tem+=2;
+                    if(maxLen<tem){
+                        maxLen=tem;
+                        mid=i;
+                    }
+                }
+            }
+        }
+        if(maxLen%2==1){
+            return s.substring(mid-maxLen/2, mid+maxLen/2+1);
+        }else{
+            return s.substring(mid-maxLen/2+1, mid+maxLen/2+1);
+        }
+    }
+
+
 }

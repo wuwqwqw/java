@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.Stack;
+
 // 需要记住的算法
 public class ClassicalAlgorithm {
 
@@ -195,4 +197,86 @@ public class ClassicalAlgorithm {
         return G[n];
     }
 
+//    请写一个整数计算器，支持加减乘三种运算和括号。
+//    数据范围：0<=|s|≤100，保证计算结果始终在整型范围内
+//    要求：空间复杂度： O(n)，时间复杂度 O(n)
+//    示例1
+//    输入：
+//            "1+2"
+//    返回值：3
+//    https://www.nowcoder.com/practice/c215ba61c8b1443b996351df929dc4d4?tpId=196&tqId=37183&rp=1&ru=/exam/oj&qru=/exam/oj&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26pageSize%3D50%26search%3D%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D196&difficulty=undefined&judgeStatus=undefined&tags=&title=
+
+    public int solve (String s) {
+        // write code here
+        Stack<Character> stack1=new Stack<>();
+        Stack<Integer> stack2=new Stack<>();
+        int index = 0;
+        // 处理负数的情况
+        if (s.charAt(0)=='-'){
+            for (;index<s.length();++index){
+                if (s.charAt(index)>'9'||s.charAt(index)<'0'){
+                    break;
+                }
+            }
+            stack2.push(Integer.valueOf(s.substring(0,index)));
+        }
+        for(int i=index;i<s.length();i++){
+            if(s.charAt(i)=='-'||s.charAt(i)=='+'||s.charAt(i)=='*') {
+                stack1.push(s.charAt(i));
+            }else if (s.charAt(i) <='9'&&s.charAt(i)>='0'){
+                int tem = i;
+                for (;i<s.length();++i){
+                    if (s.charAt(i)>'9'||s.charAt(i)<'0'){
+                        break;
+                    }
+                }
+                stack2.push(Integer.valueOf(s.substring(tem,i)));
+                i--;
+                // 数字进栈时计算，而不是操作符进栈时
+                while (!stack1.isEmpty()&&stack1.peek()=='*'&&stack2.size()>=2){
+                    stack1.pop();
+                    Integer x = stack2.pop();
+                    Integer y = stack2.pop();
+                    stack2.push(x*y);
+                }
+            }else if (s.charAt(i)=='('){
+                int tem = 0,temIndex = i;
+                for (;i<s.length();++i){
+                    if (s.charAt(i)=='('){
+                        tem++;
+                    }else if(s.charAt(i)==')'){
+                        tem--;
+                    }
+                    if (tem==0){
+                        stack2.push(solve(s.substring(temIndex+1,i)));
+                        break;
+                    }
+                }
+            }
+        }
+        // 最后再算一下防止遗漏
+        while (!stack1.isEmpty()&&stack1.peek()=='*'&&stack2.size()>=2){
+            stack1.pop();
+            Integer x = stack2.pop();
+            Integer y = stack2.pop();
+            stack2.push(x*y);
+        }
+        int sum = 0;
+        while (!stack1.isEmpty()&&(stack1.peek()=='-'||stack1.peek()=='+')){
+            // 计算加减时要从前往后
+            Character pop = stack1.pop();
+            Integer x = stack2.pop();
+            if (pop=='+'){
+                sum += x;
+            }else {
+                sum -= x;
+            }
+        }
+        return stack2.peek()+sum;
+    }
+
+    @Test
+    public void testSolve(){
+        System.out.printf(String.valueOf(solve("(3+4)*(5+(2-3))")));
+    }
 }

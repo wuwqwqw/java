@@ -819,6 +819,7 @@ public class DynamicProgramming {
     }
 
     //方法2：贪心+二分查找
+    //考虑一个简单的贪心，如果我们要使上升子序列尽可能的长，则我们需要让序列上升得尽可能慢，因此我们希望每次在上升子序列最后加上的那个数尽可能的小。
     public int lengthOfLIS2(int[] nums) {
         int[] dp = new int[nums.length];
         int index =0;
@@ -828,8 +829,8 @@ public class DynamicProgramming {
                 i = -(i+1);
             }
             dp[i] = num;
-            if (index == i){
-                ++index;
+            if (index <=i){
+                index = i+1;
             }
         }
         return index;
@@ -837,7 +838,7 @@ public class DynamicProgramming {
 
     @Test
     public void testLengthOfLIS() {
-        lengthOfLIS2(new int[]{10, 9, 2, 5, 3, 7, 101, 18});
+        lengthOfLIS2(new int[]{2,1,5,3,6,4,8,9,7,10});
     }
 
 //    在一个 m*n 的棋盘的每一格都放有一个礼物，每个礼物都有一定的价值（价值大于 0）。你可以从棋盘的左上角开始拿格子里的礼物，
@@ -923,5 +924,80 @@ public class DynamicProgramming {
             ans[i] = last[i + n];
         }
         return ans;
+    }
+
+//    给定两个字符串str1和str2，输出两个字符串的最长公共子序列。如果最长公共子序列为空，则返回"-1"。目前给出的数据，仅仅会存在一个最长的公共子序列
+//    数据范围：0 \le |str1|,|str2| \le 20000≤∣str1∣,∣str2∣≤2000
+//    要求：空间复杂度 O(n^2)O(n2) ，时间复杂度 O(n^2)O(n2)
+//    示例1
+//    输入：
+//            "1A2C3D4B56","B1D23A456A"
+//    返回值：
+//            "123456"
+
+    public String LCS2(String str1, String str2) {
+        //dp[i][j]表示字符串str1.subString(0,i)和str1.subString(0,j)所构成的最长公共子序列
+        int[][] dp = new int[str1.length()+1][str2.length()+1];
+        StringBuilder builder = new StringBuilder("");
+        for (int i = 1; i <= str1.length(); i++) {
+            for (int j = 1; j <= str2.length(); j++) {
+                if (str1.charAt(i-1) == str2.charAt(j-1)) {
+                    dp[i][j] = dp[i-1][j-1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i][j-1],dp[i-1][j]);
+                }
+            }
+        }
+        if(dp[str1.length()][str2.length()]==0){
+            return "-1";
+        }
+        int i =str1.length(),j = str2.length();
+        while (builder.length()!=dp[str1.length()][str2.length()]){
+            for (;i>0&&dp[i][j]==dp[i-1][j];--i){
+                continue;
+            }
+            for (;j>0&&dp[i][j]==dp[i][j-1];--j){
+                continue;
+            }
+            builder.append(str1.charAt(i-1));
+            --i;--j;
+        }
+        return String.valueOf(builder.reverse());
+    }
+
+    @Test
+    public void testLCS2(){
+        System.out.printf(LCS2("1A2C3D4B56","B1D23A456A"));
+    }
+
+//    给定两个字符串str1和str2,输出两个字符串的最长公共子串
+//    题目保证str1和str2的最长公共子串存在且唯一。
+//    数据范围： 1 ≤∣str1∣,∣str2∣≤5000
+//    要求： 时间空间双 n^2
+//    https://www.nowcoder.com/practice/f33f5adc55f444baa0e0ca87ad8a6aac?tpId=196&tqId=37132&rp=1&ru=/exam/oj&qru=/exam/oj&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26pageSize%3D50%26search%3D%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D196&difficulty=undefined&judgeStatus=undefined&tags=&title=
+
+    public String LCS(String str1, String str2) {
+        int maxLenth = 0;
+        int maxLastIndex = 0;
+        //dp[i][j]表示字符串str1中第i个字符和str2种第j个字符为最后一个元素所构成的最长公共子串
+        int[][] dp = new int[str1.length()][str2.length()];
+        for (int i = 0; i < str1.length(); i++) {
+            for (int j = 0; j < str2.length(); j++) {
+                if (str1.charAt(i) == str2.charAt(j)) {
+                    if (i>0&&j>0){
+                        dp[i][j] = dp[i-1][j-1]+1;
+                    }else {
+                        dp[i][j] = 1;
+                    }
+                    if (dp[i][j] > maxLenth) {
+                        maxLenth = dp[i][j];
+                        maxLastIndex = i;
+                    }
+                } else {
+                    dp[i][j] = 0;
+                }
+            }
+        }
+        return str1.substring(maxLastIndex - maxLenth + 1, maxLastIndex + 1);
     }
 }

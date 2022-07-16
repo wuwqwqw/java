@@ -20,7 +20,7 @@
       <module name="FSM" target="6" />
       <module name="InnerClass" target="8" />
       <module name="IOC" target="1.5" />
-      <module name="leetcode" target="8" />
+      <module name="leetcode" target="1.8" />
       <module name="mockito" target="1.8" />
       <module name="OrderDemo" target="1.8" />
       <module name="proxy" target="1.5" />
