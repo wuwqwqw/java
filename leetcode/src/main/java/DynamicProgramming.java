@@ -937,6 +937,7 @@ public class DynamicProgramming {
 
     public String LCS2(String str1, String str2) {
         //dp[i][j]表示字符串str1.subString(0,i)和str1.subString(0,j)所构成的最长公共子序列
+        //这道题可以把得到的dp数组画出来，以便于后面提取序列
         int[][] dp = new int[str1.length()+1][str2.length()+1];
         StringBuilder builder = new StringBuilder("");
         for (int i = 1; i <= str1.length(); i++) {
@@ -999,5 +1000,80 @@ public class DynamicProgramming {
             }
         }
         return str1.substring(maxLastIndex - maxLenth + 1, maxLastIndex + 1);
+    }
+
+//    最长的括号子串
+//    给出一个长度为 n 的，仅包含字符 '(' 和 ')' 的字符串，计算最长的格式正确的括号子串的长度。
+//    例1: 对于字符串 "(()" 来说，最长的格式正确的子串是 "()" ，长度为 2 .
+//    例2：对于字符串 ")()())" , 来说, 最长的格式正确的子串是 "()()" ，长度为 4 .
+//    https://www.nowcoder.com/practice/45fd68024a4c4e97a8d6c45fc61dc6ad?tpId=196&tqId=37079&rp=1&ru=/exam/oj&qru=/exam/oj&sourceUrl=%2Fexam%2Foj%3Fpage%3D2%26pageSize%3D50%26search%3D%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D196&difficulty=undefined&judgeStatus=undefined&tags=&title=
+//
+    public int longestValidParentheses (String s) {
+        if(s.length()==0||s.length()==1){
+            return 0;
+        }
+        int max = 0;
+        int[] dp = new int[s.length()];
+        dp[0] = 0;
+        for(int i = 1;i<s.length();++i){
+            if(s.charAt(i)=='('){
+                dp[i] = 0;
+            }else{
+                if(s.charAt(i-1)=='('){
+                    dp[i] = (i-2>=0?dp[i-2]:0)+2;
+                }else{
+                    if(dp[i-1] ==0){
+                        dp[i]=0;
+                    }else{
+                        if(i-1-dp[i-1]>=0&&s.charAt(i-1-dp[i-1])=='('){
+                            dp[i] = 2+dp[i-1]+(i-2-dp[i-1]>=0?dp[i-2-dp[i-1]]:0);
+                        }else{
+                            dp[i] = 0;
+                        }
+                    }
+                }
+            }
+            max = Math.max(max,dp[i]);
+        }
+        return max;
+    }
+
+//    最长上升子序列(三)
+//    给定数组 arr ，设长度为 n ，输出 arr 的最长上升子序列。（如果有多个答案，请输出其中 按数值(注：区别于按单个字符的ASCII码值)进行比较的 字典序最小的那个）
+//    https://www.nowcoder.com/practice/9cf027bf54714ad889d4f30ff0ae5481?tpId=196&tqId=37129&rp=1&ru=/exam/oj&qru=/exam/oj&sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26pageSize%3D50%26search%3D%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D196&difficulty=undefined&judgeStatus=undefined&tags=&title=
+
+    // nums [2, 1, 5, 3, 6, 4, 8, 9, 7]
+    //  dp [1, 3, 4, 7, 9, 0, 0, 0, 0]
+    // posArr [1, 1, 2, 2, 3, 3, 4, 5, 4]
+    // ans [1, 3, 4, 8, 9]
+    public int[] LIS(int[] nums) {
+        int[] dp = new int[nums.length];
+        int index =0;
+        int[] posArr = new int[nums.length];
+        for (int i=0;i<nums.length;++i){
+            int num =nums[i];
+            int pos = Arrays.binarySearch(dp, 0, index, num);
+            if (pos<0){
+                pos = -(pos+1);
+            }
+
+            dp[pos] = num;
+            if (index <=pos){
+                index = pos+1;
+            }
+            posArr[i] = pos +1;
+        }
+        int[] ans = new int[index];
+        for (int i = nums.length-1;i>=0;--i){
+            if (posArr[i] == index){
+                ans[--index] = nums[i];
+            }
+        }
+        return ans;
+    }
+
+    @Test
+    public void test(){
+        System.out.println(Arrays.toString(LIS(new int[]{2, 1, 5, 3, 6, 4, 8, 9, 7})));
     }
 }

@@ -1,4 +1,5 @@
 import org.junit.Test;
+import org.omg.CORBA.MARSHAL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -505,6 +506,37 @@ public class Tree {
         if (preorder.length == 0) return null;
         return build(preorder, inorder, 0, preorder.length - 1, 0, inorder.length - 1);
 
+    }
+
+//    二叉树中的最大路径和
+//    二叉树里面的路径被定义为:从该树的任意节点出发，经过父=>子或者子=>父的连接，达到任意节点的序列。
+//    注意:
+//    1.同一个节点在一条二叉树路径里中最多出现一次
+//    2.一条路径至少包含一个节点，且不一定经过根节点
+//    给定一个二叉树的根节点root，请你计算它的最大路径和
+//    https://www.nowcoder.com/practice/da785ea0f64b442488c125b441a4ba4a?tpId=196&tqId=37050&rp=1&ru=/exam/oj&qru=/exam/oj&sourceUrl=%2Fexam%2Foj%3Fpage%3D2%26pageSize%3D50%26search%3D%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D196&difficulty=undefined&judgeStatus=undefined&tags=&title=
+//    输入：{1,2,3}
+//    返回值：6
+
+    int max = Integer.MIN_VALUE;
+
+    public int maxPathSum(TreeNode root) {
+        getMaxCount(root);
+        return max;
+    }
+
+    public int getMaxCount(TreeNode root) {
+        if (root == null) {
+            return 0;
+        } else {
+            int left = getMaxCount(root.left);
+            int right = getMaxCount(root.right);
+            int tem = root.val + (Math.max(left, 0)) + (Math.max(right, 0));
+            if (tem > max) {
+                max = tem;
+            }
+            return Math.max(left, right) + root.val;
+        }
     }
 
 

@@ -133,6 +133,48 @@ public class BackTrack {
         }
     }
 
+
+//    加起来和为目标值的组合(二)
+//    给出一组候选数 c 和一个目标数 t ，找出候选数中起来和等于 t 的所有组合。c 中的每个数字在一个组合中只能使用一次。
+//    注意：
+//    1. 题目中所有的数字（包括目标数 t ）都是正整数
+//    2. 组合中的数字要按非递减排序
+//    3. 结果中不能包含重复的组合
+//    4. 组合之间的排序按照索引从小到大依次比较，小的排在前面，如果索引相同的情况下数值相同，则比较下一个索引。
+//    要求：空间复杂度 O(n)， 时间复杂度 O(2^n)
+//    示例1
+//    输入：
+//    返回值：
+//            [[10,10,60],[10,20,50],[10,70],[20,60]]
+//    说明：
+//    给定的候选数集是[100,10,20,70,60,10,50]，目标数是80
+//    https://www.nowcoder.com/practice/75e6cd5b85ab41c6a7c43359a74e869a?tpId=196&tqId=37076&rp=1&ru=/exam/oj&qru=/exam/oj&sourceUrl=%2Fexam%2Foj%3Fpage%3D2%26pageSize%3D50%26search%3D%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D196&difficulty=undefined&judgeStatus=undefined&tags=&title=
+
+    public ArrayList<ArrayList<Integer>> combinationSum2(int[] num, int target) {
+        ArrayList<ArrayList<Integer>> combos = new ArrayList<>();
+        ArrayList<Integer> combo = new ArrayList<>();
+        Arrays.sort(num);
+        backTrack(combos,combo,0,target,num,0);
+        return combos;
+    }
+
+    public void backTrack(ArrayList<ArrayList<Integer>> combos, ArrayList<Integer> combo, int index, int target, int[] nums, int sum) {
+        if (sum == target) {
+            combos.add(new ArrayList<>(combo));
+        } else if(sum<target){
+            for (int i = index; i < nums.length; ++i) {
+                combo.add(nums[i]);
+                sum += nums[i];
+                backTrack(combos, combo, i + 1, target, nums, sum);
+                combo.remove(combo.size() - 1);
+                sum -= nums[i];
+                while (i<nums.length-1&&nums[i+1]==nums[i]){
+                    ++i;
+                }
+            }
+        }
+    }
+
     @Test
     public void testPermutation() {
         permutation("qqe");

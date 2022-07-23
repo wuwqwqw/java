@@ -279,4 +279,72 @@ public class ClassicalAlgorithm {
     public void testSolve(){
         System.out.printf(String.valueOf(solve("(3+4)*(5+(2-3))")));
     }
+
+//    缺失的第一个正整数
+//    给定一个未排序的整数数组nums，请你找出其中没有出现的最小的正整数
+//    进阶： 空间复杂度 O(1)，时间复杂度 O(n)
+//    https://www.nowcoder.com/practice/50ec6a5b0e4e45348544348278cdcee5?tpId=196&tqId=37133&rp=1&ru=/exam/oj&qru=/exam/oj&sourceUrl=%2Fexam%2Foj%3Fpage%3D2%26pageSize%3D50%26search%3D%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D196&difficulty=undefined&judgeStatus=undefined&tags=&title=
+//    原地哈希
+
+    public int minNumberDisappeared(int[] nums) {
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] <= 0) {
+                nums[i] = n + 1;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            if (Math.abs(nums[i]) <= n) {
+                nums[Math.abs(nums[i]) - 1] = -1 * Math.abs(nums[Math.abs(nums[i]) - 1]);
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            if (nums[i] > 0) {
+                return i + 1;
+            }
+        }
+        return n + 1;
+    }
+
+//    给定一个 n×n 的二维矩阵matrix 表示一个图像。请你将图像顺时针旋转 90 度。
+//    你必须在 原地 旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要 使用另一个矩阵来旋转图像。
+//    链接：https://leetcode.cn/problems/rotate-image
+//    输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
+//    输出：[[7,4,1],[8,5,2],[9,6,3]]
+
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for (int i = 0; i < n / 2; ++i) {
+            for (int j = 0; j < (n + 1) / 2; ++j) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n - j - 1][i];
+                matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
+                matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1];
+                matrix[j][n - i - 1] = temp;
+            }
+        }
+    }
+
+//    搜索二维矩阵 II
+//    编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target 。该矩阵具有以下特性：
+//    每行的元素从左到右升序排列。
+//    每列的元素从上到下升序排列。
+//    https://leetcode.cn/problems/search-a-2d-matrix-ii/
+//    从左下向右上找
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int i=0;
+        int j=matrix[0].length-1;
+        while(i<matrix.length&&j>=0){
+            if(matrix[i][j]==target){
+                return true;
+            }else if(matrix[i][j]<target){
+                i++;
+            }else{
+                j--;
+            }
+        }
+        return false;
+    }
+
 }

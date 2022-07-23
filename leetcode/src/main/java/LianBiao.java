@@ -225,4 +225,58 @@ public class LianBiao {
         return ans;
     }
 
+//    链表的奇偶重排
+//    给定一个单链表，请设定一个函数，将链表的奇数位节点和偶数位节点分别放在一起，重排后输出。
+//    注意是节点的编号而非节点的数值。
+//    要求：空间复杂度 O(n)，时间复杂度 O(n)
+//    输入：{1,2,3,4,5,6}
+//    返回值：{1,3,5,2,4,6}
+//    说明：1->2->3->4->5->6->NULL 重排后为1->3->5->2->4->6->NULL
+//    https://www.nowcoder.com/practice/02bf49ea45cd486daa031614f9bd6fc3?tpId=196&tqId=37179&rp=1&ru=/exam/oj&qru=/exam/oj&sourceUrl=%2Fexam%2Foj%3Fpage%3D2%26pageSize%3D50%26search%3D%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D196&difficulty=undefined&judgeStatus=undefined&tags=&title=
+
+    public ListNode oddEvenList (ListNode head) {
+        if (head==null||head.next==null||head.next.next==null){
+            return head;
+        }
+        ListNode leftHead = head;
+        ListNode leftTail = head;
+        ListNode rightHead = head.next;
+        ListNode rightTail = head.next;
+        head = head.next.next;
+        boolean flag = true;
+        while (head!=null){
+            if (flag){
+                leftTail.next = head;
+                leftTail = leftTail.next;
+                flag = false;
+            }else {
+                rightTail.next = head;
+                rightTail = rightTail.next;
+                flag = true;
+            }
+            head = head.next;
+        }
+        rightTail.next = null;
+        leftTail.next = rightHead;
+        return leftHead;
+    }
+
+    @Test
+    public void testOddEvenList(){
+        ListNode head = new ListNode(2);
+        ListNode root = head;
+        head.next = new ListNode(1);
+        head=head.next;
+        head.next = new ListNode(3);
+        head=head.next;
+        head.next = new ListNode(5);
+        head=head.next;
+        head.next = new ListNode(6);
+        head=head.next;
+        head.next = new ListNode(4);
+        head=head.next;
+        head.next = new ListNode(7);
+        head=head.next;
+        oddEvenList(root);
+    }
 }
