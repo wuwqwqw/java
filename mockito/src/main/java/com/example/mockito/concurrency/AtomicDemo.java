@@ -19,7 +19,7 @@ public class AtomicDemo extends Thread{
         AtomicDemo demo1 = new AtomicDemo();
         demo.start();
         demo1.start();
-        Thread.sleep(20000);
+        Thread.sleep(2000);
         System.out.println(integer);
     }
 }

@@ -8,6 +8,9 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 
 @Aspect
 @Component
@@ -20,6 +23,13 @@ public class AddMetricAop {
 
     @Before("annotationPointcut()")
     public void before(JoinPoint joinPoint){
+        int[][] ints = new int[2][2];
+        Arrays.sort(ints, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return 0;
+            }
+        });
         Signature signature = joinPoint.getSignature();
         System.out.println("正在执行方法"+signature.getName());
     }

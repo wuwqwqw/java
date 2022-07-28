@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 // 需要记住的算法
@@ -14,7 +16,27 @@ public class ClassicalAlgorithm {
             next = null;
         }
     }
-    
+
+//    给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target  的那 两个 整数，并返回它们的数组下标。
+//    你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。
+//    你可以按任意顺序返回答案。
+//    示例 1：
+//    输入：nums = [2,7,11,15], target = 9
+//    输出：[0,1]
+//    解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。
+//    链接：https://leetcode.cn/problems/two-sum
+
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> hashtable = new HashMap<Integer, Integer>();
+        for (int i = 0; i < nums.length; ++i) {
+            if (hashtable.containsKey(target - nums[i])) {
+                return new int[]{hashtable.get(target - nums[i]), i};
+            }
+            hashtable.put(nums[i], i);
+        }
+        return new int[0];
+    }
+
 //    给定一个链表，如果它是有环链表，实现一个算法返回环路的开头节点。若环不存在，请返回 null。
 //    如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。 为了表示给定链表中的环，
 //    我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，

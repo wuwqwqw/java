@@ -21,7 +21,7 @@
       <module name="InnerClass" target="8" />
       <module name="IOC" target="1.5" />
       <module name="leetcode" target="1.8" />
-      <module name="mockito" target="1.8" />
+      <module name="mockito" target="18" />
       <module name="OrderDemo" target="1.8" />
       <module name="proxy" target="1.5" />
       <module name="reflection" target="1.5" />
